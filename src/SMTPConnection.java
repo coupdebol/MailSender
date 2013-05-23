@@ -5,6 +5,7 @@ import java.util.*;
 /**
  * Open an SMTP connection to a mailserver and send one mail.
  * @author Steven Mac
+ * @author Julien Antony
  */
 public class SMTPConnection {
     /* The socket to the server */
@@ -28,18 +29,21 @@ public class SMTPConnection {
 		fromServer = new BufferedReader(new InputStreamReader(connection.getInputStream()));
 		toServer =  new DataOutputStream(connection.getOutputStream());
 		
-		/* Fill in */
-		
 		/* Read a line from server and check that the reply code is 220.
 		   If not, throw an IOException. */
-		/* Fill in */
+		String firstLine = fromServer.readLine();
+		if(!firstLine.equals("220 "+ envelope.DestHost)){
+			throw new IOException("Connection Failed!");
+		}else{
+		
 
-		/* SMTP handshake. We need the name of the local machine.
-		   Send the appropriate SMTP handshake command. */
-		String localhost = /* Fill in */;
-		sendCommand( /* Fill in */ );
-
-		isConnected = true;
+			/* SMTP handshake. We need the name of the local machine.
+			   Send the appropriate SMTP handshake command. */
+			String localhost = /* Fill in */;
+			sendCommand( /* Fill in */ );
+	
+			isConnected = true;
+		}
     }
 
     /* Send the message. Write the correct SMTP-commands in the
