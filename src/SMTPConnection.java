@@ -81,17 +81,18 @@ public class SMTPConnection {
 	*/
     private void sendCommand(String command, int rc) throws IOException {
 		/* Steve's guess at this section */
-		// This is the Servers response code variable
-		int src;
+		
+		int src;// This is the Servers response code variable
 		
 		/* Write command to server and read reply from server. */
-		toServer.flush(command);
-		src = (connection.nextLine());
+		toServer.writeChars(command);
+		src = parseReply(fromServer.readLine());
 
 		/* Check that the server's reply code is the same as the parameter
 		   rc. If not, throw an IOException. */
-		if(src != rc)
-		{throw new IOException("Reply code mismatch.");}
+		if(src != rc){
+			throw new IOException("Reply code mismatch.");
+		}
     }
 
     /* Parse the reply line from the server. Returns the reply code. */
