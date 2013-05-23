@@ -4,7 +4,7 @@ import java.util.*;
 
 /**
  * Open an SMTP connection to a mailserver and send one mail.
- *
+ * @author Steven Mac
  */
 public class SMTPConnection {
     /* The socket to the server */
