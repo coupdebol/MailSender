@@ -7,6 +7,7 @@ import java.text.*;
  * Mail message.
  *
  * @author Jussi Kangasharju
+ * @author Julien Antony
  */
 public class Message {
     /* The headers and the body of the message. */

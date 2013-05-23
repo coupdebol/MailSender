@@ -9,6 +9,7 @@ import java.awt.event.*;
  * A simple mail client with a GUI for sending mail.......
  *
  * @author Jussi Kangasharju
+ * @author Julien Antony
  */
 public class MailClient extends Frame {
     /* The stuff for the GUI. */
