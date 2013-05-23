@@ -11,6 +11,7 @@ import java.awt.event.*;
  * @author Jussi Kangasharju
  * @author Julien Antony
  */
+@SuppressWarnings("serial")
 public class MailClient extends Frame {
     /* The stuff for the GUI. */
     private Button btSend = new Button("Send");
@@ -31,7 +32,8 @@ public class MailClient extends Frame {
      * Create a new MailClient window with fields for entering all
      * the relevant information (From, To, Subject, and message).
      */
-    public MailClient() {
+    @SuppressWarnings("deprecation")
+	public MailClient() {
 		super("Java Mailclient");
 		
 		/* Create panels for holding the fields. To make it look nice,
