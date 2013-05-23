@@ -96,7 +96,12 @@ public class SMTPConnection {
 
     /* Parse the reply line from the server. Returns the reply code. */
     private int parseReply(String reply) {
-	/* Fill in */
+    	String[] splitMessage = reply.split(" ");
+    	int code = -1;
+    	if( splitMessage.length > 0){
+    		code = Integer.parseInt(splitMessage[0]);
+    	}
+    	return code;
     }
 
     /* Destructor. Closes the connection if something bad happens. */
