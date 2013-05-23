@@ -35,8 +35,6 @@ public class SMTPConnection {
 		if(!firstLine.equals("220 "+ envelope.DestHost)){
 			throw new IOException("Connection Failed!");
 		}else{
-		
-
 			/* SMTP handshake. We need the name of the local machine.
 			   Send the appropriate SMTP handshake command. */
 			String localhost = /* Fill in */;
@@ -71,17 +69,29 @@ public class SMTPConnection {
 		}
     }
 
-    /* Send an SMTP command to the server. Check that the reply code is
-       what is is supposed to be according to RFC 821. */
+    /* INCOMPLETE
+		Send an SMTP command to the server. Check that the reply code is
+		what is is supposed to be according to RFC 821. 
+		   Command	Reply Code
+			DATA		354
+			HELO		250
+			MAIL FROM	250
+			QUIT		221
+			RCPT TO		250
+	*/
     private void sendCommand(String command, int rc) throws IOException {
-	/* Fill in */
-	/* Write command to server and read reply from server. */
-	/* Fill in */
+		/* Steve's guess at this section */
+		// This is the Servers response code variable
+		int src;
+		
+		/* Write command to server and read reply from server. */
+		toServer.flush(command);
+		src = (connection.nextLine());
 
-	/* Fill in */
-	/* Check that the server's reply code is the same as the parameter
-	   rc. If not, throw an IOException. */
-	/* Fill in */
+		/* Check that the server's reply code is the same as the parameter
+		   rc. If not, throw an IOException. */
+		if(src != rc)
+		{throw new IOException("Reply code mismatch.");}
     }
 
     /* Parse the reply line from the server. Returns the reply code. */
