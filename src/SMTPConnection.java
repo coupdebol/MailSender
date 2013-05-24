@@ -8,6 +8,7 @@ import java.util.*;
  * @author Steven Mac
  * @author Julien Antony
  */
+@SuppressWarnings("unused")
 public class SMTPConnection {
     /* The socket to the server */
     private Socket connection;
@@ -90,7 +91,10 @@ public class SMTPConnection {
 		
 		/* Write command to server and read reply from server. */
 		toServer.writeChars(command);
-		src = parseReply(fromServer.readLine());
+		System.out.println(command);//used for testing
+		String serverReply = fromServer.readLine();
+		System.out.println(serverReply);//used for testing
+		src = parseReply(serverReply);
 
 		/* Check that the server's reply code is the same as the parameter
 		   rc. If not, throw an IOException. */
