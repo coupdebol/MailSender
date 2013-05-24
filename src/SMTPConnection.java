@@ -58,7 +58,7 @@ public class SMTPConnection {
 		/* Send RCPT TO ... */ 
 		sendCommand(envelope.Recipient,250);
 		/* Send the DATA... */
-		String dataToSend = envelope.message.toString();
+		String dataToSend = envelope.Message.toString();
 		sendCommand(dataToSend,354);
 	}
 
