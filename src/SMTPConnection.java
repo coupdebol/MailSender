@@ -61,7 +61,8 @@ public class SMTPConnection {
 		sendCommand("RCPT TO: ".concat(envelope.Recipient),250);
 		/* Send the DATA... */
 		String dataToSend = envelope.Message.toString();
-		sendCommand(dataToSend,354);
+		sendCommand("DATA",354);
+		sendCommand(dataToSend.concat(CRLF).concat("."),354);
 	}
 
     /* Close the connection. First, terminate on SMTP level, then
