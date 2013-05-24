@@ -33,7 +33,7 @@ public class SMTPConnection {
 		/* Read a line from server and check that the reply code is 220.
 		   If not, throw an IOException. */
 		String firstLine = fromServer.readLine();
-		if(!firstLine.equals("220 "+ envelope.DestHost)){
+		if(parseReply(firstLine)!= 250){
 			throw new IOException("Connection Failed!");
 		}else{
 			/* SMTP handshake. We need the name of the local machine.
