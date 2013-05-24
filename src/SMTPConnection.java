@@ -3,7 +3,8 @@ import java.io.*;
 import java.util.*;
 
 /**
- * Open an SMTP connection to a mailserver and send one mail.
+ * Open an SMTP connection to a MailServer and send one mail.
+ *
  * @author Steven Mac
  * @author Julien Antony
  */
@@ -37,9 +38,8 @@ public class SMTPConnection {
 		}else{
 			/* SMTP handshake. We need the name of the local machine.
 			   Send the appropriate SMTP handshake command. */
-			String localhost = /* Fill in */;
-			// String hostName = InetAddress.getLocalHost().getHostName(); 
-			sendCommand( /* Fill in */ );
+			String localhost = InetAddress.getLocalHost().getHostName();
+			sendCommand(localhost,250);
 	
 			isConnected = true;
 		}
@@ -49,11 +49,17 @@ public class SMTPConnection {
        correct order. No checking for errors, just throw them to the
        caller. */
     public void send(Envelope envelope) throws IOException {
-		/* Fill in */
 		/* Send all the necessary commands to send a message. Call
 		   sendCommand() to do the dirty work. Do _not_ catch the
 		   exception thrown from sendCommand(). */
-		/* Fill in */
+
+		/* Send MAIL FROM... */ 
+		sendCommand(envelope.Sender,250); //will the following work? I'm guessing here..
+		/* Send RCPT TO ... */ 
+		sendCommand(envelope.Recipient,250);
+		/* Send the DATA... */
+		String dataToSend = envelope.message.toString();
+		sendCommand(dataToSend,354);
 	}
 
     /* Close the connection. First, terminate on SMTP level, then
@@ -80,8 +86,6 @@ public class SMTPConnection {
 			RCPT TO		250
 	*/
     private void sendCommand(String command, int rc) throws IOException {
-		/* Steve's guess at this section */
-		
 		int src;// This is the Servers response code variable
 		
 		/* Write command to server and read reply from server. */
