@@ -7,6 +7,7 @@ import java.util.*;
  *
  * @author Steven Mac
  * @author Julien Antony
+ * @author Jacob Vandertuin
  */
 @SuppressWarnings("unused")
 public class SMTPConnection {
@@ -55,9 +56,9 @@ public class SMTPConnection {
 		   exception thrown from sendCommand(). */
 
 		/* Send MAIL FROM... */ 
-		sendCommand(envelope.Sender,250); //will the following work? I'm guessing here..
-		/* Send RCPT TO ... */ 
-		sendCommand(envelope.Recipient,250);
+		sendCommand("MAIL FROM: ".concat(envelope.Sender),250); //will the following work? I'm guessing here..
+		/* Send RCPT TO ... */
+		sendCommand("RCPT TO: ".concat(envelope.Recipient),250);
 		/* Send the DATA... */
 		String dataToSend = envelope.Message.toString();
 		sendCommand(dataToSend,354);
