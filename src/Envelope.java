@@ -30,13 +30,14 @@ public class Envelope {
 		/* Get sender and recipient. */
 		Sender = message.getFrom();
 		Recipient = new ArrayList<String>();
-		int numberOfRecipients = 1;
-		Recipient.add(message.getTo());
-		if (message.getCc().length()!=0){
-			numberOfRecipients++;
-			Recipient.add(message.getCc());
+		
+		
+		for(String email: message.getTo()){
+			Recipient.add(email);
 		}
-		//for(int i =0 ; i < numberOfRecipients;i++ )
+		for(String email: message.getCc()){
+			Recipient.add(email);
+		}
 			
 
 		/* Get message. We must escape the message to make sure that 
@@ -78,7 +79,11 @@ public class Envelope {
     /* For printing the envelope. Only for debug. */
     public String toString() {
 		String res = "Sender: " + Sender + '\n';
-		res += "Recipient: " + Recipient + '\n';
+		
+		for(String email: Recipient ){
+			res += "Recipient: " + email + '\n';
+		}
+				
 		res += "MX-host: " + DestHost + ", address: " + DestAddr + '\n';
 		res += "Message:" + '\n';
 		res += Message.toString();
