@@ -18,18 +18,23 @@ public class Message {
        from the headers. */
     private String From;
     private String To;
-
+    private String Cc;
+    
     /* To make it look nicer */
     private static final String CRLF = "\r\n";
 
     /* Create the message object by inserting the required headers from
        RFC 822 (From, To, Date). */
-    public Message(String from, String to, String subject, String text) {
+    public Message(String from, String to,String cc, String subject, String text) {
 	/* Remove whitespace */
 		From = from.trim();
 		To = to.trim();
+		Cc = cc.trim();
 		Headers = "From: " + From + CRLF;
 		Headers += "To: " + To + CRLF;
+		if(!cc.equals("")){
+			Headers += "Cc: " + Cc + CRLF;
+		}
 		Headers += "Subject: " + subject.trim() + CRLF;
 
 		/* A close approximation of the required format. Unfortunately
@@ -49,12 +54,17 @@ public class Message {
     public String getTo() {
 		return To;
     }
+    
+    public String getCc() {
+		return Cc;
+    }
 
     /* Check whether the message is valid. In other words, check that
        both sender and recipient contain only one @-sign. */
     public boolean isValid() {
 		int fromat = From.indexOf('@');
 		int toat = To.indexOf('@');
+		int ccat = Cc.indexOf('@');
 
 		if(fromat < 1 || (From.length() - fromat) <= 1) {
 		    System.out.println("Sender address is invalid");
@@ -64,6 +74,14 @@ public class Message {
 		    System.out.println("Recipient address is invalid");
 		    return false;
 		}
+		
+		if(Cc.length()!= 0){
+			if(ccat < 1 || (Cc.length() - ccat) <= 1) {
+			    System.out.println("Cc Recipient address is invalid");
+			    return false;
+			}
+		}
+		
 		if(fromat != From.lastIndexOf('@')) {
 		    System.out.println("Sender address is invalid");
 		    return false;
