@@ -63,7 +63,7 @@ public class SMTPConnection {
 		/* Send the DATA... */
 		String dataToSend = envelope.Message.toString();
 		sendCommand("DATA"+CRLF,354);
-		sendCommand(dataToSend + CRLF,354);
+		sendCommand(dataToSend + CRLF + "." + CRLF,354);
 	}
 
     /* Close the connection. First, terminate on SMTP level, then
