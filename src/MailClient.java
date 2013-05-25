@@ -23,6 +23,8 @@ public class MailClient extends Frame {
     private TextField fromField = new TextField("", 40);
     private Label toLabel = new Label("To:"); 
     private TextField toField = new TextField("", 40);
+    private Label CcLabel = new Label("Cc:");
+    private TextField CcField = new TextField("", 40);
     private Label subjectLabel = new Label("Subject:");
     private TextField subjectField = new TextField("", 40);
     private Label messageLabel = new Label("Message:");
@@ -41,6 +43,7 @@ public class MailClient extends Frame {
 		Panel serverPanel = new Panel(new BorderLayout());
 		Panel fromPanel = new Panel(new BorderLayout());
 		Panel toPanel = new Panel(new BorderLayout());
+		Panel ccPanel = new Panel(new BorderLayout());
 		Panel subjectPanel = new Panel(new BorderLayout());
 		Panel messagePanel = new Panel(new BorderLayout());
 		serverPanel.add(serverLabel, BorderLayout.WEST);
@@ -49,6 +52,8 @@ public class MailClient extends Frame {
 		fromPanel.add(fromField, BorderLayout.CENTER);
 		toPanel.add(toLabel, BorderLayout.WEST);
 		toPanel.add(toField, BorderLayout.CENTER);
+		ccPanel.add(CcLabel, BorderLayout.WEST);
+		ccPanel.add(CcField, BorderLayout.CENTER);
 		subjectPanel.add(subjectLabel, BorderLayout.WEST);
 		subjectPanel.add(subjectField, BorderLayout.CENTER);
 		messagePanel.add(messageLabel, BorderLayout.NORTH);	
@@ -57,6 +62,7 @@ public class MailClient extends Frame {
 		fieldPanel.add(serverPanel);
 		fieldPanel.add(fromPanel);
 		fieldPanel.add(toPanel);
+		fieldPanel.add(ccPanel);
 		fieldPanel.add(subjectPanel);
 
 		/* Create a panel for the buttons and add listeners to the
