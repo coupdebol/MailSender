@@ -65,7 +65,8 @@ public class SMTPConnection {
 		/* Send MAIL FROM... */ 
 		sendCommand("MAIL FROM: " + envelope.Sender + CRLF,250);
 		/* Send RCPT TO ... */
-		sendCommand("RCPT TO: " + envelope.Recipient + CRLF,250);
+		for(String recipient: envelope.Recipient)
+			sendCommand("RCPT TO: " + recipient + CRLF,250);
 		/* Send the DATA... */
 		String dataToSend = envelope.Message.toString();
 		sendCommand("DATA"+CRLF,354);

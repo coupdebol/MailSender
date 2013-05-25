@@ -16,7 +16,7 @@ public class Envelope {
     public String Sender;
 
     /* SMTP-recipient, or contents of To-header. */
-    public String Recipient;//$$$$Change to an array
+    public ArrayList<String> Recipient;
 
     /* Target MX-host */
     public String DestHost;
@@ -29,7 +29,15 @@ public class Envelope {
     public Envelope(Message message, String localServer) throws UnknownHostException {
 		/* Get sender and recipient. */
 		Sender = message.getFrom();
-		Recipient = message.getTo();
+		Recipient = new ArrayList<String>();
+		int numberOfRecipients = 1;
+		Recipient.add(message.getTo());
+		if (message.getCc().length()!=0){
+			numberOfRecipients++;
+			Recipient.add(message.getCc());
+		}
+		//for(int i =0 ; i < numberOfRecipients;i++ )
+			
 
 		/* Get message. We must escape the message to make sure that 
 	   there are no single periods on a line. This would mess up
