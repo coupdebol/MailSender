@@ -23,8 +23,8 @@ public class MailClient extends Frame {
     private TextField fromField = new TextField("", 40);
     private Label toLabel = new Label("To:"); 
     private TextField toField = new TextField("", 40);
-    private Label CcLabel = new Label("Cc:");
-    private TextField CcField = new TextField("", 40);
+    private Label ccLabel = new Label("Cc:");
+    private TextField ccField = new TextField("", 40);
     private Label subjectLabel = new Label("Subject:");
     private TextField subjectField = new TextField("", 40);
     private Label messageLabel = new Label("Message:");
@@ -52,8 +52,8 @@ public class MailClient extends Frame {
 		fromPanel.add(fromField, BorderLayout.CENTER);
 		toPanel.add(toLabel, BorderLayout.WEST);
 		toPanel.add(toField, BorderLayout.CENTER);
-		ccPanel.add(CcLabel, BorderLayout.WEST);
-		ccPanel.add(CcField, BorderLayout.CENTER);
+		ccPanel.add(ccLabel, BorderLayout.WEST);
+		ccPanel.add(ccField, BorderLayout.CENTER);
 		subjectPanel.add(subjectLabel, BorderLayout.WEST);
 		subjectPanel.add(subjectField, BorderLayout.CENTER);
 		messagePanel.add(messageLabel, BorderLayout.NORTH);	
@@ -108,10 +108,12 @@ public class MailClient extends Frame {
 				System.out.println("Need recipient!");
 				return;
 		    }
+		    
 
 		    /* Create the message */
 		    Message mailMessage = new Message(fromField.getText(), 
-						      toField.getText(), 
+						      toField.getText(),
+						      ccField.getText(),
 						      subjectField.getText(), 
 						      messageText.getText());
 
