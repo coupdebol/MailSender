@@ -50,14 +50,20 @@ public class SMTPConnection {
 
     /* Send the message. Write the correct SMTP-commands in the
        correct order. No checking for errors, just throw them to the
-       caller. */
+       caller. 
+			Command	Reply Code
+			DATA		354
+			HELO		250
+			MAIL FROM	250
+			QUIT		221
+			RCPT TO		250 */
     public void send(Envelope envelope) throws IOException {
 		/* Send all the necessary commands to send a message. Call
 		   sendCommand() to do the dirty work. Do _not_ catch the
 		   exception thrown from sendCommand(). */
 
 		/* Send MAIL FROM... */ 
-		sendCommand("MAIL FROM: " + envelope.Sender + CRLF,250); //will the following work? I'm guessing here..
+		sendCommand("MAIL FROM: " + envelope.Sender + CRLF,250);
 		/* Send RCPT TO ... */
 		sendCommand("RCPT TO: " + envelope.Recipient + CRLF,250);
 		/* Send the DATA... */
@@ -71,7 +77,7 @@ public class SMTPConnection {
     public void close() {
 		isConnected = false;
 		try {
-		    sendCommand( "QUIT" +CRLF,221 );
+		    sendCommand( "QUIT" + CRLF,221 );
 		    connection.close();
 		} catch (IOException e) {
 		    System.out.println("Unable to close connection: " + e);
@@ -79,16 +85,8 @@ public class SMTPConnection {
 		}
     }
 
-    /* INCOMPLETE
-		Send an SMTP command to the server. Check that the reply code is
-		what is is supposed to be according to RFC 821. 
-		   Command	Reply Code
-			DATA		354
-			HELO		250
-			MAIL FROM	250
-			QUIT		221
-			RCPT TO		250
-	*/
+    /*  Send an SMTP command to the server. Check that the reply code is
+		what is is supposed to be according to RFC 821. */
     private void sendCommand(String command, int rc) throws IOException {
 		int src;// This is the Servers response code variable
 		
