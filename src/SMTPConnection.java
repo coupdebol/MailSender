@@ -57,13 +57,13 @@ public class SMTPConnection {
 		   exception thrown from sendCommand(). */
 
 		/* Send MAIL FROM... */ 
-		sendCommand("MAIL FROM: ".concat(envelope.Sender),250); //will the following work? I'm guessing here..
+		sendCommand("MAIL FROM: " + envelope.Sender + CRLF,250); //will the following work? I'm guessing here..
 		/* Send RCPT TO ... */
-		sendCommand("RCPT TO: ".concat(envelope.Recipient),250);
+		sendCommand("RCPT TO: " + envelope.Recipient + CRLF,250);
 		/* Send the DATA... */
 		String dataToSend = envelope.Message.toString();
-		sendCommand("DATA",354);
-		sendCommand(dataToSend.concat(CRLF).concat("."),354);
+		sendCommand("DATA"+CRLF,354);
+		sendCommand(dataToSend + CRLF,354);
 	}
 
     /* Close the connection. First, terminate on SMTP level, then
