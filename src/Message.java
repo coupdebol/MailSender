@@ -37,11 +37,16 @@ public class Message {
 		From = from.trim();
 		for(int i=0 ;i<toList.length; i++){
 			String trimmedTo = toList[i].trim();
+			if(trimmedTo.indexOf(";")!= -1)
+				trimmedTo = trimmedTo.substring(0,trimmedTo.indexOf(";"));
 			To.add(trimmedTo);
 		}
 		for(int i=0 ;i<ccList.length; i++){
 			String trimmedCc = ccList[i].trim();
-			Cc.add(trimmedCc);
+			if(trimmedCc.indexOf(";")!= -1)
+				trimmedCc = trimmedCc.substring(0,trimmedCc.indexOf(";"));
+			if(!trimmedCc.equals(""))
+				Cc.add(trimmedCc);
 		}
 		
 		Headers = "From: " + From + CRLF;
@@ -102,7 +107,7 @@ public class Message {
 		
 		if(Cc.size()!= 0){
 			for(String email: Cc){
-				int ccat = Cc.indexOf('@');
+				int ccat = email.indexOf('@');
 				if(ccat < 1 || (email.length() - ccat) <= 1) {
 				    System.out.println("Cc Recipient address is invalid");
 				    return false;
@@ -120,7 +125,6 @@ public class Message {
 			    System.out.println("Recipient address is invalid");
 			    return false;
 			}	
-			return true;
 		}
 		
 		for(String email: Cc){
@@ -129,10 +133,9 @@ public class Message {
 			    System.out.println("Recipient address is invalid");
 			    return false;
 			}	
-			return true;
 		}
 		
-		return false;//something is wrong if we get to here
+		return true;
     }
     
     /* For printing the message. */
