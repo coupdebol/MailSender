@@ -34,6 +34,7 @@ public class SMTPConnection {
 		
 		/* Read a line from server and check that the reply code is 220.
 		   If not, throw an IOException. */
+		
 		String firstLine = fromServer.readLine();
 		if(parseReply(firstLine)!= 220){
 			throw new IOException("Connection Failed!");
@@ -41,7 +42,7 @@ public class SMTPConnection {
 			/* SMTP handshake. We need the name of the local machine.
 			   Send the appropriate SMTP handshake command. */
 			String localhost = InetAddress.getLocalHost().getHostName();
-			sendCommand(localhost,250);
+			sendCommand("HELO " + localhost + CRLF , 250);
 	
 			isConnected = true;
 		}
@@ -92,7 +93,7 @@ public class SMTPConnection {
 		int src;// This is the Servers response code variable
 		
 		/* Write command to server and read reply from server. */
-		toServer.writeChars(command);
+		toServer.writeBytes(command);
 		System.out.println(command);//used for testing
 		String serverReply = fromServer.readLine();
 		System.out.println(serverReply);//used for testing
