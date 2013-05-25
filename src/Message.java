@@ -17,8 +17,8 @@ public class Message {
     /* Sender and recipient. With these, we don't need to extract them
        from the headers. */
     private String From;
-    private String To;
-    private String Cc;
+    private ArrayList<String> To;
+    private ArrayList<String> Cc;
     
     /* To make it look nicer */
     private static final String CRLF = "\r\n";
@@ -26,15 +26,36 @@ public class Message {
     /* Create the message object by inserting the required headers from
        RFC 822 (From, To, Date). */
     public Message(String from, String to,String cc, String subject, String text) {
-	/* Remove whitespace */
+    	To = new ArrayList<String>();
+    	Cc = new ArrayList<String>();
+    	
+    	//split to and cc fields
+    	String[] toList = to.split(";");
+    	String[] ccList = cc.split(";");
+    	
+    	/* Remove whitespace */
 		From = from.trim();
-		To = to.trim();
-		Cc = cc.trim();
-		Headers = "From: " + From + CRLF;
-		Headers += "To: " + To + CRLF;
-		if(!cc.equals("")){
-			Headers += "Cc: " + Cc + CRLF;
+		for(int i=0 ;i<toList.length; i++){
+			String trimmedTo = toList[i].trim();
+			To.add(trimmedTo);
 		}
+		for(int i=0 ;i<ccList.length; i++){
+			String trimmedCc = ccList[i].trim();
+			Cc.add(trimmedCc);
+		}
+		
+		Headers = "From: " + From + CRLF;
+		for(String email: To){
+			Headers += "To: " + email + CRLF;
+		}
+		
+		if(!cc.equals("")){
+			for(String email: Cc){
+				Headers += "Cc: " + email + CRLF;
+			}
+		}
+		
+		
 		Headers += "Subject: " + subject.trim() + CRLF;
 
 		/* A close approximation of the required format. Unfortunately
@@ -51,11 +72,11 @@ public class Message {
 		return From;
     }
 
-    public String getTo() {
+    public ArrayList<String> getTo() {
 		return To;
     }
     
-    public String getCc() {
+    public ArrayList<String> getCc() {
 		return Cc;
     }
 
@@ -63,22 +84,29 @@ public class Message {
        both sender and recipient contain only one @-sign. */
     public boolean isValid() {
 		int fromat = From.indexOf('@');
-		int toat = To.indexOf('@');
-		int ccat = Cc.indexOf('@');
+		
+		
 
 		if(fromat < 1 || (From.length() - fromat) <= 1) {
 		    System.out.println("Sender address is invalid");
 		    return false;
 		}
-		if(toat < 1 || (To.length() - toat) <= 1) {
-		    System.out.println("Recipient address is invalid");
-		    return false;
+		
+		for(String email: To){
+			int toat = email.indexOf('@');
+			if(toat < 1 || (email.length() - toat) <= 1) {
+			    System.out.println("Recipient address is invalid");
+			    return false;
+			}
 		}
 		
-		if(Cc.length()!= 0){
-			if(ccat < 1 || (Cc.length() - ccat) <= 1) {
-			    System.out.println("Cc Recipient address is invalid");
-			    return false;
+		if(Cc.size()!= 0){
+			for(String email: Cc){
+				int ccat = Cc.indexOf('@');
+				if(ccat < 1 || (email.length() - ccat) <= 1) {
+				    System.out.println("Cc Recipient address is invalid");
+				    return false;
+				}
 			}
 		}
 		
@@ -86,11 +114,25 @@ public class Message {
 		    System.out.println("Sender address is invalid");
 		    return false;
 		}
-		if(toat != To.lastIndexOf('@')) {
-		    System.out.println("Recipient address is invalid");
-		    return false;
-		}	
-		return true;
+		for(String email: To){
+			int toat = email.indexOf('@');
+			if(toat != email.lastIndexOf('@')) {
+			    System.out.println("Recipient address is invalid");
+			    return false;
+			}	
+			return true;
+		}
+		
+		for(String email: Cc){
+			int ccat = email.indexOf('@');
+			if(ccat != email.lastIndexOf('@')) {
+			    System.out.println("Recipient address is invalid");
+			    return false;
+			}	
+			return true;
+		}
+		
+		return false;//something is wrong if we get to here
     }
     
     /* For printing the message. */
