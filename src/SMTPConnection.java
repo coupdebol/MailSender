@@ -71,7 +71,7 @@ public class SMTPConnection {
     public void close() {
 		isConnected = false;
 		try {
-		    sendCommand( /* Fill in */ /*something like*/ "QUIT",221 );
+		    sendCommand( "QUIT" +CRLF,221 );
 		    connection.close();
 		} catch (IOException e) {
 		    System.out.println("Unable to close connection: " + e);
